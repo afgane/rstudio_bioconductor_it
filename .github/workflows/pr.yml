@@ -150,7 +150,7 @@ jobs:
   deploy:
     name: Deploy
     needs: [setup, lint]
-    if: ${{ (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' ) && github.repository_owner == 'enis' }}
+    if: ${{ (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' ) && github.repository_owner == 'afgane' }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -187,7 +187,7 @@ jobs:
   deploy-report:
     name: Report deploy status
     needs: [deploy]
-    if: ${{ always() && needs.deploy.result != 'success' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' ) && github.repository_owner == 'enis' }}
+    if: ${{ always() && needs.deploy.result != 'success' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' ) && github.repository_owner == 'afgane' }}
     runs-on: ubuntu-latest
     steps:
     # report to the PR if deployment failed
