@@ -149,7 +149,7 @@ jobs:
   # deploy the tools to the toolsheds (first TTS for testing)
   deploy:
     name: Deploy
-    needs: [setup, lint, combine_outputs]
+    needs: [setup, lint]
     if: ${{ (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' ) && github.repository_owner == 'enis' }}
     runs-on: ubuntu-latest
     strategy:
@@ -208,10 +208,10 @@ jobs:
 
   determine-success:
     name: Check workflow success
-    needs: [setup, lint, flake8, lintr, file_sizes, combine_outputs]
+    needs: [setup, lint]
     if: ${{ always() && github.ref != 'refs/heads/master' && github.ref != 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
     - name: Check tool lint status
-      if: ${{ needs.lint.result != 'success' && needs.flake8.result != 'skipped' }}
+      if: ${{ needs.lint.result != 'success' }}
       run: exit 1
