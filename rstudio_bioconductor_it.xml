@@ -1,5 +1,5 @@
 
-<tool id="rstudio_bioconductor_it" tool_type="interactive" name="RStudio" version="24.2+bioc" profile="22.01">
+<tool id="rstudio_bioconductor_it" tool_type="interactive" name="RStudio" version="4.4.2+3.20" profile="22.01">
     <icon src="bioconductor.png" />
     <description>R 4.4.2 with Bioconductor 3.20</description>
     <requirements>
