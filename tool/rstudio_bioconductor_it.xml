@@ -109,8 +109,8 @@ Any files that you store in the `~/galaxy_outputs/` directory will be
 automatically transferred back to Galaxy when you finish your session and stop
 the RStudio Interactive Tool.
 
-In addition, you can use the following functions within your R scripts to
-facilitate interactive data transfer:. All files will be located in the
+In addition, you can use the following functions within your R session to
+facilitate interactive data transfer. All imported files will be located in the
 `~/galaxy_imports` directory.
 
 **gx_get(history_dataset_number)** – Loads a dataset from your
