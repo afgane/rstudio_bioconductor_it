@@ -1,9 +1,9 @@
 
-<tool id="rstudio_bioconductor_it" tool_type="interactive" name="RStudio" version="4.4.2+3.20" profile="22.01">
+<tool id="rstudio_bioconductor_it" tool_type="interactive" name="RStudio" version="4.5.0+3.21" profile="22.01">
     <icon src="bioconductor.png" />
-    <description>R 4.4.2 with Bioconductor 3.20</description>
+    <description>R 4.5.0 with Bioconductor 3.21</description>
     <requirements>
-        <container type="docker">bioconductor/rstudio-galaxy:3.20</container>
+        <container type="docker">bioconductor/galaxy-rstudio:RELEASE_3_21</container>
     </requirements>
     <entry_points>
         <entry_point name="RStudio" requires_domain="False" requires_path_in_header_named="X-RStudio-Root-Path">
@@ -71,6 +71,9 @@
             <discover_datasets pattern="__name_and_ext__" directory="rstudio_outputs/" assign_primary_output="true" recurse="true"/>
         </collection>
     </outputs>
+    <stdio>
+        <exit_code range="129" level="log" description="User shut down the container." />
+    </stdio>
     <tests>
         <test expect_num_outputs="1">
             <param name="mode" value="previous" />
