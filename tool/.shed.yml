@@ -2,5 +2,5 @@ categories:
 - Interactive Tools
 description: RStudio with Bioconductor for interactive analysis
 homepage_url: https://github.com/afgane/rstudio_bioconductor_it
-name: rstudio_bioconductor_it
+name: interactive_tool_rstudio_bioconductor
 owner: enis
