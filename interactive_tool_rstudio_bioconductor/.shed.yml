@@ -1,6 +1,15 @@
 categories:
 - Interactive Tools
 description: RStudio with Bioconductor for interactive analysis
+long_description: |
+  This interactive tool provides an RStudio environment pre-configured with
+  Bioconductor packages for bioinformatics analysis. It is designed to
+  facilitate data exploration and visualization in a user-friendly interface.
+  Key features include:
+  - Pre-installed Bioconductor packages for genomic data analysis
+  - Seamless integration with Galaxy for data import/export
+  - Customizable R environment to suit various analysis needs
 homepage_url: https://github.com/afgane/rstudio_bioconductor_it
+remote_repository_url: https://github.com/afgane/rstudio_bioconductor_it/tree/main/interactive_tool_rstudio_bioconductor
 name: interactive_tool_rstudio_bioconductor
 owner: enis
