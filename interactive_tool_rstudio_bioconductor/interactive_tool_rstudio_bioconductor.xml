@@ -1,9 +1,8 @@
-
-<tool id="interactive_tool_rstudio_bioconductor" tool_type="interactive" name="RStudio" version="4.6.0+3.22.galaxy0" profile="22.01">
-    <icon src="bioconductor.png" />
-    <description>R 4.6.0 with Bioconductor 3.22</description>
+<tool id="interactive_tool_rstudio_bioconductor" tool_type="interactive" name="RStudio" version="4.6.0+3.23.galaxy0" profile="22.01">
+    <icon src="bioconductor.png"/>
+    <description>R 4.6 with Bioconductor 3.23</description>
     <requirements>
-        <container type="docker">bioconductor/galaxy-rstudio:RELEASE_3_22</container>
+        <container type="docker">bioconductor/galaxy-rstudio:RELEASE_3_23</container>
     </requirements>
     <entry_points>
         <entry_point name="RStudio" requires_domain="False" requires_path_in_header_named="X-RStudio-Root-Path">
@@ -12,12 +11,13 @@
         </entry_point>
     </entry_points>
     <environment_variables>
-        <environment_variable name="HISTORY_ID" strip="True">${__app__.security.encode_id($rstudio.history_id)}</environment_variable> <!-- FIXME: Warning: The use of __app__ is deprecated and will break backward compatibility in the near future -->
+        <environment_variable name="HISTORY_ID" strip="True">${__app__.security.encode_id($rstudio.history_id)}</environment_variable>
+        <!-- FIXME: Warning: The use of __app__ is deprecated and will break backward compatibility in the near future -->
         <environment_variable name="GALAXY_WEB_PORT">8080</environment_variable>
         <environment_variable name="GALAXY_URL">$__galaxy_url__</environment_variable>
         <environment_variable name="DEBUG">true</environment_variable>
         <environment_variable name="DISABLE_AUTH">true</environment_variable>
-        <environment_variable name="API_KEY" inject="api_key" />
+        <environment_variable name="API_KEY" inject="api_key"/>
     </environment_variables>
     <inputs>
         <param name="input" multiple="true" type="data" format="data" optional="true" label="Include data into the environment"/>
@@ -66,19 +66,19 @@
     ]]>
     </command>
     <outputs>
-        <data name="rstudio" format="txt" label="RStudio Interactive Tool"></data>
+        <data name="rstudio" format="txt" label="RStudio Interactive Tool"/>
         <collection name="output_collection" type="list" label="RStudio outputs">
             <discover_datasets pattern="__name_and_ext__" directory="rstudio_outputs/" assign_primary_output="true" recurse="true"/>
         </collection>
     </outputs>
     <stdio>
-        <exit_code range="129" level="log" description="User shut down the container." />
+        <exit_code range="129" level="log" description="User shut down the container."/>
     </stdio>
     <tests>
         <test expect_num_outputs="1">
-            <param name="mode" value="previous" />
-            <param name="rstudio" value="test.txt" />
-            <param name="run_it" value="true" />
+            <param name="mode" value="previous"/>
+            <param name="rstudio" value="test.txt"/>
+            <param name="run_it" value="true"/>
             <output name="rstudio" file="test.txt" ftype="txt"/>
         </test>
     </tests>
