@@ -15,7 +15,7 @@ on:
       - '*'
 env:
   GALAXY_FORK: galaxyproject
-  GALAXY_BRANCH: release_24.1
+  GALAXY_BRANCH: release_26.0
   MAX_CHUNKS: 4
   MAX_FILE_SIZE: 1M
 concurrency:
@@ -43,7 +43,7 @@ jobs:
       commit-range: ${{ steps.discover.outputs.commit-range }}
     strategy:
       matrix:
-        python-version: ['3.11']
+        python-version: ['3.13']
     steps:
     - name: Print github context properties
       run: |
@@ -57,17 +57,17 @@ jobs:
     - name: Determine latest commit in the Galaxy repo
       id: get-galaxy-sha
       run: echo "galaxy-head-sha=$(git ls-remote https://github.com/${{ env.GALAXY_FORK }}/galaxy refs/heads/${{ env.GALAXY_BRANCH }} | cut -f1)" >> $GITHUB_OUTPUT
-    - uses: actions/setup-python@v5
+    - uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python-version }}
     - name: Cache .cache/pip
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: cache-pip
       with:
         path: ~/.cache/pip
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ steps.get-galaxy-sha.outputs.galaxy-head-sha }}
     - name: Cache .planemo
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: cache-planemo
       with:
         path: ~/.planemo
@@ -109,27 +109,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.11']
+        python-version: ['3.13']
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         fetch-depth: 1
-    - uses: actions/setup-python@v5
+    - uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python-version }}
     - name: Cache .cache/pip
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: cache-pip
       with:
         path: ~/.cache/pip
         key: pip_cache_py_${{ matrix.python-version }}_gxy_${{ needs.setup.outputs.galaxy-head-sha }}
 
-    - name: Set fail level for pull request
-      if: ${{ github.event_name == 'pull_request' }}
-      run:
-        echo "FAIL_LEVEL=warn" >> "$GITHUB_ENV"
-    - name: Set fail level for merge
-      if: ${{ github.event_name != 'pull_request' }}
+    - name: Set fail level
       run:
         echo "FAIL_LEVEL=error" >> "$GITHUB_ENV"
     - name: Planemo lint
@@ -140,7 +135,7 @@ jobs:
         fail-level: ${{ env.FAIL_LEVEL }}
         repository-list: ${{ needs.setup.outputs.repository-list }}
         tool-list: ${{ needs.setup.outputs.tool-list }}
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       if: ${{ failure() }}
       with:
         name: 'Tool linting output'
@@ -154,16 +149,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.11']
+        python-version: ['3.13']
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         fetch-depth: 1
-    - uses: actions/setup-python@v5
+    - uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python-version }}
     - name: Cache .cache/pip
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: cache-pip
       with:
         path: ~/.cache/pip
@@ -192,12 +187,12 @@ jobs:
     steps:
     # report to the PR if deployment failed
     - name: Get PR object
-      uses: 8BitJonny/gh-get-current-pr@2.2.0
+      uses: 8BitJonny/gh-get-current-pr@4.0.0
       id: getpr
       with:
         sha: ${{ github.event.after }}
     - name: Create comment
-      uses: peter-evans/create-or-update-comment@v4
+      uses: peter-evans/create-or-update-comment@v5
       with:
         token: ${{ secrets.PAT }}
         issue-number: ${{ steps.getpr.outputs.number }}
